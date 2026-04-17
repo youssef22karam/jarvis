@@ -32,7 +32,13 @@ jobs:
       - name: Accept Android SDK licenses
         run: yes | sdkmanager --licenses || true
 
-      # ── 5. Make gradlew executable ─────────────────────────────────────────
+      # ── 5. Re-download gradle-wrapper.jar (fixes ClassNotFoundException) ──
+      - name: Download Gradle wrapper jar
+        run: |
+          curl -fL "https://github.com/gradle/gradle/raw/v8.6.0/gradle/wrapper/gradle-wrapper.jar" \
+            -o gradle/wrapper/gradle-wrapper.jar
+
+      # ── 6. Make gradlew executable ─────────────────────────────────────────
       - name: Grant execute permission to gradlew
         run: chmod +x gradlew
 
